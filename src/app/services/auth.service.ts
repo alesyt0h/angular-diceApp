@@ -1,9 +1,41 @@
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { of } from 'rxjs'
+import { catchError, tap } from 'rxjs/operators'
+
+import { environment } from '../../environments/environment';
+import { AuthResponse, User } from '../auth/interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() { }
+  private _apiUrl: string = environment.apiUrl;
+  private _user!: User;
+
+  constructor(private _http: HttpClient) { }
+
+  login(email: string, password: string){
+    return this._http.post<AuthResponse>(this._apiUrl + '/login', {email, password}).pipe(
+        tap((resp: AuthResponse) => {
+          localStorage.setItem('token', resp.access_token);
+          this._user = {
+            id: resp.user.id,
+            nickname: resp.user.nickname,
+            email: resp.user.email,
+            created_at: resp.user.created_at,
+            updated_at: resp.user.updated_at,
+          };
+        }),
+        catchError(err => {
+            return of(new HttpErrorResponse(err));
+        })
+      );
+  }
+
+  get getUser(){
+    return this._user;
+  }
+
 }
