@@ -34,8 +34,30 @@ export class AuthService {
       );
   }
 
+  register(nickname: string, email: string, password: string){
+    return this._http.post<AuthResponse>(this._apiUrl, {nickname, email, password}).pipe(
+        tap((resp: AuthResponse) => {
+          localStorage.setItem('token', resp.access_token);
+          this._user = {
+            id: resp.user.id,
+            nickname: resp.user.nickname,
+            email: resp.user.email,
+            created_at: resp.user.created_at,
+            updated_at: resp.user.updated_at,
+          };
+        }),
+        catchError(err => {
+            return of(new HttpErrorResponse(err));
+        })
+      );
+  }
+
   get getUser(){
     return this._user;
+  }
+
+  isAuthResponse(object: any): object is AuthResponse {
+    return 'access_token' in object;
   }
 
 }

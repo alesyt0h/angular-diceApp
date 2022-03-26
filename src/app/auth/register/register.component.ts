@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthResponse } from '../interfaces/interfaces';
+import { HttpErrorResponse } from '@angular/common/http';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -7,14 +13,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterComponent implements OnInit {
 
-  registerForm: any;
+  registerForm: FormGroup = this._formBuilder.group({
+    nickname: ['', Validators.maxLength(15) ],
+    email: ['', [Validators.required, Validators.email] ],
+    password: ['', [Validators.required, Validators.minLength(8)]],
+  });
 
-  constructor() { }
+  constructor(
+    private _authService: AuthService,
+    private _router: Router,
+    private _formBuilder: FormBuilder
+  ){}
 
   ngOnInit(): void {
   }
 
   register(){
+    const { nickname, email, password } = this.registerForm.value;
 
+    this._authService.register(nickname, email, password)
+    .subscribe((resp: AuthResponse | HttpErrorResponse) => {
+      if (this._authService.isAuthResponse(resp)){
+        this._router.navigateByUrl('/');
+      } else {
+        Swal.fire('Error', resp.error.error, 'error');
+      }
+    });
   }
 }

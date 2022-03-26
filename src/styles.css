@@ -145,9 +145,7 @@ button:hover {
   justify-content: center;
   align-items: center;
   padding: 15px;
-  background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
 }
 
 .wrap-login100 {
