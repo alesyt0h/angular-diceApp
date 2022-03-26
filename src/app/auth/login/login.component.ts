@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { AuthResponse } from '../interfaces/interfaces';
 
 import Swal from 'sweetalert2'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,12 +16,15 @@ import Swal from 'sweetalert2'
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup = this._formBuilder.group({
-    email: ['admin@admin.com', [Validators.required, Validators.email] ],
-    password: ['password', [Validators.required, Validators.minLength(6)]],
+    email: ['', [Validators.required, Validators.email] ],
+    password: ['', [Validators.required, Validators.minLength(8)]],
   });
 
-  constructor(private _formBuilder: FormBuilder,
-              private _authService: AuthService) { }
+  constructor(
+    private _formBuilder: FormBuilder,
+    private _authService: AuthService,
+    private _router: Router
+  ){}
 
   ngOnInit(): void {
   }
@@ -30,16 +34,11 @@ export class LoginComponent implements OnInit {
 
     this._authService.login(email, password)
     .subscribe((resp: AuthResponse | HttpErrorResponse) => {
-      if (this.isAuthResponse(resp)){
-        console.log(resp.access_token);
+      if (this._authService.isAuthResponse(resp)){
+        this._router.navigateByUrl('/');
       } else {
-        console.log(resp.error.message);
+        Swal.fire('Error', resp.error.message, 'error');
       }
     });
   }
-
-  isAuthResponse(object: any): object is AuthResponse {
-    return 'access_token' in object;
-  }
-
 }
