@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { JwPaginationModule } from 'jw-angular-pagination';
+
 import { PlayComponent } from './play/play.component';
 import { PlayerListComponent } from './player-list/player-list.component';
 import { ThrowsComponent } from './throws/throws.component';
@@ -7,7 +9,6 @@ import { RankingComponent } from './ranking/ranking.component';
 import { LoserComponent } from './loser/loser.component';
 import { WinnerComponent } from './winner/winner.component';
 import { GameRoutingModule } from './game-routing.module';
-
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { GameRoutingModule } from './game-routing.module';
   ],
   imports: [
     CommonModule,
-    GameRoutingModule
+    GameRoutingModule,
+    JwPaginationModule
   ]
 })
 export class GameModule { }

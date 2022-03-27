@@ -11,6 +11,7 @@ export class ThrowsComponent implements OnInit {
 
   throws!: Throw[];
   winningPercentage: number = 0;
+  pageOfItems!: Array<any>;
 
   constructor(
     private _gameService: GameService
@@ -22,5 +23,9 @@ export class ThrowsComponent implements OnInit {
       this.winningPercentage = resp.winning_percentage;
     });
   }
+
+  onChangePage(pageOfItems: Array<any>) {
+    this.pageOfItems = pageOfItems;
+}
 
 }
