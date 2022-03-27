@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { GameService } from '../../services/game.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Ranking } from '../interfaces/ranking';
 
 @Component({
   selector: 'app-ranking',
@@ -7,9 +10,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RankingComponent implements OnInit {
 
-  constructor() { }
+  result!: number | string;
+
+  constructor(
+    private _gameService: GameService
+  ){}
 
   ngOnInit(): void {
+    this._gameService.ranking().subscribe((resp: Ranking | HttpErrorResponse) => {
+      if(this.isHttpErrorResponse(resp)){
+        console.log(resp)
+        this.result = resp.error.message;
+      } else {
+        this.result = resp.winning_percentage;
+      }
+    });
+  }
+
+  isHttpErrorResponse(object: any): object is HttpErrorResponse {
+    return 'error' in object;
+  }
+
+  isNumber(data: number | string){
+    return (typeof data === 'number') ? true : false;
   }
 
 }

@@ -1,1 +1,14 @@
-<p>ranking works!</p>
+<h1>Ranking</h1>
+<ng-container *ngIf="result; else elseTemplate">
+  <ng-container *ngIf="isNumber(result); else noThrows">
+    The winning percentage for all the users in the system is <span style="{{(result >= 50) ? 'color:green' : 'color:red'}}">{{result}}</span>
+  </ng-container>
+  <ng-template #noThrows>
+    {{result}}
+  </ng-template>
+</ng-container>
+<ng-template #elseTemplate>
+  Loading..
+</ng-template>
+
+
