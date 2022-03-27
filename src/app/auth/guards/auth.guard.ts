@@ -1,19 +1,27 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, RouterStateSnapshot, UrlSegment, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, RouterStateSnapshot, UrlSegment, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate, CanLoad {
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return true;
+
+
+  constructor(private _router: Router){}
+
+  redirect: Promise<boolean> = this._router.navigateByUrl('/play');
+
+  canActivate(): Promise<boolean> | boolean {
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
+
+    return (token && user) ? this.redirect : true;
   }
-  canLoad(
-    route: Route,
-    segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return true;
+  canLoad(): Promise<boolean> | boolean {
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
+
+    return (token && user) ? this.redirect : true;
   }
 }
