@@ -9,7 +9,7 @@ import { ThrowsResponse, Throw } from '../interfaces/throw';
 })
 export class ThrowsComponent implements OnInit {
 
-  throws!: Throw[];
+  throws: Throw[] = [];
   winningPercentage: number = 0;
   pageOfItems!: Array<any>;
 

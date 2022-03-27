@@ -15,8 +15,8 @@
       <td style="{{(throw.result === 'win') ? 'color:green' : 'color:red'}}">{{throw.result}}</td>
       <td>{{throw.created_at | date:'short'}}</td>
     </tr>
-    <jw-pagination [items]="throws" (changePage)="onChangePage($event)"></jw-pagination>
   </table>
+  <jw-pagination [items]="throws" (changePage)="onChangePage($event)"></jw-pagination>
   <!-- main app container -->
 <!-- <div class="card text-center m-3">
   <h3 class="card-header">Angular 10 Pagination Example</h3>
