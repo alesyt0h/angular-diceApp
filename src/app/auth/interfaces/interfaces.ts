@@ -8,6 +8,7 @@ export interface User {
   nickname: string,
   email: string,
   is_admin?: boolean,
+  winning_percentage?: number,
   created_at: string,
   updated_at: string,
 }

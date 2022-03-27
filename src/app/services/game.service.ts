@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { ThrowResponse, ThrowsResponse } from '../game/interfaces/throw';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { Ranking, Loser, Winner } from '../game/interfaces/ranking';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +30,39 @@ export class GameService {
     const url = `${this.apiUrl}/${id}/games`;
 
     return this._http.get<ThrowsResponse>(url, {headers: this.headers});
+  }
+
+  ranking(){
+    this.setHeaders();
+    const url = `${this.apiUrl}/ranking`;
+
+    return this._http.get<Ranking>(url, {headers: this.headers}).pipe(
+      catchError(err => {
+          return of(new HttpErrorResponse(err));
+      })
+    )
+  }
+
+  loser(){
+    this.setHeaders();
+    const url = `${this.apiUrl}/ranking/loser`;
+
+    return this._http.get<Loser>(url, {headers: this.headers}).pipe(
+      catchError(err => {
+          return of(new HttpErrorResponse(err));
+      })
+    );
+  }
+
+  winner(){
+    this.setHeaders();
+    const url = `${this.apiUrl}/ranking/winner`;
+
+    return this._http.get<Winner>(url, {headers: this.headers}).pipe(
+      catchError(err => {
+          return of(new HttpErrorResponse(err));
+      })
+    );
   }
 
   get getToken(){
