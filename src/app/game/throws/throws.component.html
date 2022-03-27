@@ -1,1 +1,23 @@
-<p>throws works!</p>
+<ng-container *ngIf="throws.length > 0; else loading">
+  <span>Your winning percentage is <strong>{{winningPercentage}}</strong></span>
+  <table>
+    <tr>
+      <th>#</th>
+      <th>Black Dice</th>
+      <th>Red Dice</th>
+      <th>Result</th>
+      <th>Date</th>
+    </tr>
+    <tr *ngFor="let throw of throws; let i = index">
+      <td>{{i + 1}}</td>
+      <td>{{throw.black_dice}}</td>
+      <td>{{throw.red_dice}}</td>
+      <td style="{{(throw.result === 'win') ? 'color:green' : 'color:red'}}">{{throw.result}}</td>
+      <td>{{throw.created_at | date:'short'}}</td>
+    </tr>
+  </table>
+</ng-container>
+<ng-template #loading>
+  <span>Loading..</span>
+</ng-template>
+
