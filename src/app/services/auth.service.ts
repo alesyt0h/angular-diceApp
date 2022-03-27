@@ -50,7 +50,6 @@ export class AuthService {
       tap((resp: AuthResponse) => {
         localStorage.clear();
         this._user = null;
-        this.saveUser();
       }),
       catchError(err => {
           return of(new HttpErrorResponse(err));
