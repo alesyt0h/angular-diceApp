@@ -50,7 +50,6 @@ export class AuthService {
       tap((resp: AuthResponse) => {
         localStorage.clear();
         this._user = null;
-        this.saveUser();
       }),
       catchError(err => {
           return of(new HttpErrorResponse(err));
@@ -64,7 +63,9 @@ export class AuthService {
 
   loadUser(){
     const user = localStorage.getItem('user') || '';
-    this._user = JSON.parse(user);
+    if(user){
+      this._user = JSON.parse(user);
+    }
   }
 
   get getToken(){

@@ -1,1 +1,71 @@
-<p>throws works!</p>
+<ng-container *ngIf="throws.length > 0; else loading">
+  <span>Your winning percentage is <strong>{{winningPercentage}}</strong></span>
+  <table>
+    <tr>
+      <th>#</th>
+      <th>Black Dice</th>
+      <th>Red Dice</th>
+      <th>Result</th>
+      <th>Date</th>
+    </tr>
+    <tr *ngFor="let throw of pageOfItems; let i = index">
+      <td>{{i + 1}}</td>
+      <td>{{throw.black_dice}}</td>
+      <td>{{throw.red_dice}}</td>
+      <td style="{{(throw.result === 'win') ? 'color:green' : 'color:red'}}">{{throw.result}}</td>
+      <td>{{throw.created_at | date:'short'}}</td>
+    </tr>
+  </table>
+  <jw-pagination [items]="throws" (changePage)="onChangePage($event)"></jw-pagination>
+  <!-- main app container -->
+<!-- <div class="card text-center m-3">
+  <h3 class="card-header">Angular 10 Pagination Example</h3>
+  <div class="card-body"> -->
+      <!-- <div >{{item.result}}</div> -->
+  <!-- </div>
+  <div class="card-footer pb-0 pt-3"> -->
+      <!-- <div>
+        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+          <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+            <span class="sr-only">Previous</span>
+            <svg class="h-5 w-5" x-description="Heroicon name: solid/chevron-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+  <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+</svg>
+          </a>
+          Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50"
+          <a href="#" aria-current="page" class="z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+            1
+          </a>
+          <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+            2
+          </a>
+          <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 hidden md:inline-flex relative items-center px-4 py-2 border text-sm font-medium">
+            3
+          </a>
+          <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+            ...
+          </span>
+          <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 hidden md:inline-flex relative items-center px-4 py-2 border text-sm font-medium">
+            8
+          </a>
+          <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+            9
+          </a>
+          <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+            10
+          </a>
+          <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+            <span class="sr-only">Next</span>
+            <svg class="h-5 w-5" x-description="Heroicon name: solid/chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+  <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+</svg>
+          </a>
+        </nav>
+      </div> -->
+  <!-- </div>
+</div> -->
+</ng-container>
+<ng-template #loading>
+  <span>Loading..</span>
+</ng-template>
+

@@ -11,11 +11,11 @@ const routes: Routes = [
   },
   {
     path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
-    canLoad: [AuthGuard], canActivate: [AuthGuard]
+    // canLoad: [AuthGuard], canActivate: [AuthGuard]
   },
   {
     path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule),
-    canLoad: [AuthGuard], canActivate: [AuthGuard]
+    // canLoad: [AuthGuard], canActivate: [AuthGuard]
   },
   { path: '404', component: ErrorPageComponent },
   { path: '**', redirectTo: '404' }

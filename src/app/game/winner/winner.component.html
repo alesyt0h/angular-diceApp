@@ -1,1 +1,18 @@
-<p>winner works!</p>
+<h1>Most Winning Player</h1>
+<ng-container *ngIf="!loading; else elseTemplate">
+  <ng-container *ngIf="user; else noThrows">
+    Nickname: {{user.nickname}}
+    <br>
+    Email: {{user.email}}
+    <br>
+    Created at: {{user.created_at | date:'short'}}
+    <br>
+    Winning Percentage: <span style="{{(user.winning_percentage! >= 50) ? 'color:green' : 'color:red'}}">{{user.winning_percentage}}</span>
+  </ng-container>
+  <ng-template #noThrows>
+    There are no throws in the system to calculate the most winning player!
+  </ng-template>
+</ng-container>
+<ng-template #elseTemplate>
+  Loading..
+</ng-template>
