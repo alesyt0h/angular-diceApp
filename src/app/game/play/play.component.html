@@ -7,11 +7,12 @@
 </div>
 
 <div *ngIf="thrown" style="margin-top: 50px">
+  <!-- Grid no longer needed -->
 	<div style="display:grid;grid-template-columns: repeat(2, 1fr);grid-template-rows: 1fr 50px;">
 		<img src="../../../assets/images/dices/b-{{lastThrow.black_dice}}.png" alt="" style="margin:auto">
 		<img src="../../../assets/images/dices/r-{{lastThrow.red_dice}}.png" alt="" style="margin:auto">
-		<h4 style="margin:auto">{{lastThrow.black_dice}}</h4>
-		<h4 style="margin:auto">{{lastThrow.red_dice}}</h4>
+		<!-- <h4 style="margin:auto">{{lastThrow.black_dice}}</h4>
+		<h4 style="margin:auto">{{lastThrow.red_dice}}</h4> -->
 	</div>
 	<div style="text-align:center">
 		<ng-container *ngIf="lastThrow.result === 'win'; else lost">
