@@ -5,6 +5,7 @@ import { ThrowResponse, ThrowsResponse } from '../game/interfaces/throw';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Ranking, Loser, Winner } from '../game/interfaces/ranking';
+import { Players } from '../game/interfaces/playerList';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,16 @@ export class GameService {
     const url = `${this.apiUrl}/ranking/winner`;
 
     return this._http.get<Winner>(url, {headers: this.headers}).pipe(
+      catchError(err => {
+          return of(new HttpErrorResponse(err));
+      })
+    );
+  }
+
+  playerList(){
+    this.setHeaders();
+
+    return this._http.get<Players>(this.apiUrl, {headers: this.headers}).pipe(
       catchError(err => {
           return of(new HttpErrorResponse(err));
       })
