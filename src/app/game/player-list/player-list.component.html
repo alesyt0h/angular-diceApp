@@ -1,1 +1,25 @@
-<p>player-list works!</p>
+<h1>Player list</h1>
+
+<ng-container *ngIf="!loading; else elseTemplate">
+    <table>
+      <tr>
+        <th>#</th>
+        <th>Nickname</th>
+        <th>Email</th>
+        <th>Winning Percentage</th>
+        <th>Created at</th>
+      </tr>
+      <tr *ngFor="let player of pageOfItems; let i = index">
+        <td>{{i + 1}}</td>
+        <td>{{player.nickname}}</td>
+        <td>{{player.email}}</td>
+        <td style="{{(player.winning_percentage >= 50) ? 'color:green' : 'color:red'}}">{{(player.winning_percentage) ? player.winning_percentage : 'N/A'}}</td>
+        <td>{{player.created_at | date:'short'}}</td>
+      </tr>
+    </table>
+  <jw-pagination [items]="players" (changePage)="onChangePage($event)"></jw-pagination>
+</ng-container>
+<ng-template #elseTemplate>
+  Loading..
+</ng-template>
+
