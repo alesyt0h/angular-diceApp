@@ -1,14 +1,17 @@
-<h1>Ranking</h1>
+<h1 class="text-center text-3xl mb-8">Ranking</h1>
 <ng-container *ngIf="result; else elseTemplate">
-  <ng-container *ngIf="isNumber(result); else noThrows">
-    The winning percentage for all the users in the system is <span style="{{(result >= 50) ? 'color:green' : 'color:red'}}">{{result}}</span>
-  </ng-container>
-  <ng-template #noThrows>
-    {{result}}
-  </ng-template>
+    <ng-container *ngIf="isNumber(result); else noThrows">
+        <span class="text-gray-500">
+            The winning percentage for all the users in the system is
+            <span [ngClass]="result >= 50 ? 'text-green-600' : 'text-red-600'">
+                {{result}}
+            </span>
+        </span>
+    </ng-container>
+    <ng-template #noThrows>
+        {{result}}
+    </ng-template>
 </ng-container>
 <ng-template #elseTemplate>
-  Loading..
+    Loading..
 </ng-template>
-
-
