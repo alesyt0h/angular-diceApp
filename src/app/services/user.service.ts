@@ -22,7 +22,24 @@ export class UserService {
     update(nickname: string){
         this.setHeaders();
 
-        return this._http.put<UpdateResponse>(`${this.apiUrl}/${this.getUserId}`, {nickname}, {headers: this.headers}).pipe(
+        return this._http.put<UpdateResponse>(
+            `${this.apiUrl}/${this.getUserId}`,
+            {nickname},
+            {headers: this.headers}
+        ).pipe(
+            catchError(err => {
+                return of(new HttpErrorResponse(err));
+            })
+        )
+    }
+
+    delete(id: string){
+        this.setHeaders();
+
+        return this._http.delete<{message: string}>(
+            `${this.apiUrl}/${id}/games`,
+            {headers: this.headers}
+        ).pipe(
             catchError(err => {
                 return of(new HttpErrorResponse(err));
             })
