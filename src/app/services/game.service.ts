@@ -23,14 +23,22 @@ export class GameService {
     this.setHeaders();
     const url = `${this.apiUrl}/${id}/games`;
 
-    return this._http.post<ThrowResponse>(url, {}, {headers: this.headers});
+    return this._http.post<ThrowResponse>(url, {}, {headers: this.headers}).pipe(
+        catchError(err => {
+            return of(new HttpErrorResponse(err));
+        })
+    );
   }
 
   throws(id: number){
     this.setHeaders();
     const url = `${this.apiUrl}/${id}/games`;
 
-    return this._http.get<ThrowsResponse>(url, {headers: this.headers});
+    return this._http.get<ThrowsResponse>(url, {headers: this.headers}).pipe(
+        catchError(err => {
+            return of(new HttpErrorResponse(err));
+        })
+    );
   }
 
   ranking(){
