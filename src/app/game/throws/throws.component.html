@@ -1,54 +1,58 @@
-<h1 class="text-center text-3xl mb-2 pt-[30px]">Throws</h1>
-<ng-container *ngIf="throws.length > 0; else isLoading" class="relative">
-    <svg routerLink="/user/delete/throws/{{getUserId()}}" xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-red-600 absolute top-10 right-[57px] bg-gray-400/40 rounded-lg p-[5px] cursor-pointer hover:bg-gray-400/80" fill="none" viewBox="0 0 24 24" stroke="currentColor" title="fuck you">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-        <title>Delete all throws</title>
-    </svg>
-    <span class="mb-4 inline-block">
-        Your winning percentage is
-        <strong [ngClass]="winningPercentage >= 50 ? 'text-green-600' : 'text-red-600'">{{winningPercentage}}</strong>
-    </span>
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-4">
-        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Black Dice
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Red Dice
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Result
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Date
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    *ngFor="let throw of pageOfItems; let i = index">
-                    <td class="px-6 py-4 text-center">
-                        {{throw.black_dice}}
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        {{throw.red_dice}}
-                    </td>
-                    <td class="px-6 py-4 text-center"
-                        [ngClass]="throw.result === 'win' ? 'text-green-600' : 'text-red-600'">
-                        {{throw.result}}
-                    </td>
-                    <td class="px-6 py-4 text-right">
-                        {{throw.created_at | date:'short'}}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <jw-pagination [items]="throws" (changePage)="onChangePage($event)"></jw-pagination>
-    <div class="text-sm absolute font-['Poppins-Regular'] text-gray-500 right-[57px] pt-[8px]">Total throws: <strong>{{throws.length}}</strong></div>
-</ng-container>
-<ng-template #isLoading>
-    <span>Loading..</span>
-</ng-template>
+<div class="relative">
+    <h1 class="text-center text-3xl mb-2 pt-[30px]">Throws</h1>
+    <ng-container *ngIf="throws.length > 0; else isLoading" class="relative">
+        <svg routerLink="/user/delete/throws/{{getUserId()}}" xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-red-600 absolute top-10 right-0 bg-gray-400/40 rounded-lg p-[5px] cursor-pointer hover:bg-gray-400/80" fill="none" viewBox="0 0 24 24" stroke="currentColor" title="fuck you">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+            <title>Delete all throws</title>
+        </svg>
+        <span class="mb-4 inline-block">
+            Your winning percentage is
+            <strong [ngClass]="winningPercentage >= 50 ? 'text-green-600' : 'text-red-600'">{{winningPercentage}}</strong>
+        </span>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-4">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3 text-center">
+                            Black Dice
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-center">
+                            Red Dice
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-center">
+                            Result
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-center">
+                            Date
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                        *ngFor="let throw of pageOfItems; let i = index">
+                        <td class="px-6 py-4 text-center">
+                            {{throw.black_dice}}
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            {{throw.red_dice}}
+                        </td>
+                        <td class="px-6 py-4 text-center"
+                            [ngClass]="throw.result === 'win' ? 'text-green-600' : 'text-red-600'">
+                            {{throw.result}}
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            {{throw.created_at | date:'short'}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="flex justify-center">
+            <jw-pagination [items]="throws" (changePage)="onChangePage($event)"></jw-pagination>
+        </div>
+        <div class="text-sm absolute font-['Poppins-Regular'] text-gray-500 right-0 pt-[8px]">Total throws: <strong>{{throws.length}}</strong></div>
+    </ng-container>
+    <ng-template #isLoading>
+        <span>Loading..</span>
+    </ng-template>
+</div>

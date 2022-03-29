@@ -39,7 +39,9 @@
             </tbody>
         </table>
     </div>
-    <jw-pagination [items]="players" (changePage)="onChangePage($event)"></jw-pagination>
+    <div class="flex justify-center">
+        <jw-pagination [items]="players" (changePage)="onChangePage($event)"></jw-pagination>
+    </div>
 </ng-container>
 <ng-template #elseTemplate>
     Loading..
