@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { GameService } from '../../services/game.service';
 import { ThrowsResponse, Throw } from '../interfaces/throw';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
     templateUrl: './throws.component.html',
     styleUrls: ['./throws.component.css']
 })
-export class ThrowsComponent implements OnInit {
+export class ThrowsComponent implements OnInit, AfterViewChecked {
 
     throws: Throw[] = [];
     winningPercentage: number = 0;
@@ -18,6 +18,9 @@ export class ThrowsComponent implements OnInit {
     constructor(
         private _gameService: GameService
     ){}
+    ngAfterViewChecked(): void {
+        this.changeJwPaginationText();
+    }
 
     ngOnInit(): void {
         this._gameService.throws(this._gameService.getUserId).subscribe((resp: ThrowsResponse | HttpErrorResponse) => {
@@ -40,5 +43,15 @@ export class ThrowsComponent implements OnInit {
 
     isHttpErrorResponse(object: any): object is HttpErrorResponse {
         return 'error' in object;
+    }
+
+    changeJwPaginationText(){
+        const previous = document.querySelector('.previous-item a');
+        const next = document.querySelector('.next-item a');
+
+        if(previous && next){
+            previous.innerHTML = '<';
+            next.innerHTML = '>';
+        }
     }
 }

@@ -1,7 +1,7 @@
-<app-header></app-header>
+<app-header *ngIf="!isAuthRoute()"></app-header>
 <div class="w-full mx-auto">
-  <div class="w-full min-h-screen flex flex-wrap justify-center items-center p-[15px] bg-center" style="background-image: url('../../../../assets/images/bg-03.jpg');">
-      <div class="min-w-[500px] bg-white rounded-[10px] overflow-hidden px-[55px] pb-[54px] relative">
+  <div class="w-full min-h-screen flex flex-wrap justify-center items-center p-[15px] pt-[70px] bg-center" style="background-image: url('../../../../assets/images/bg-03.jpg');">
+      <div class="min-w-[500px] bg-white rounded-[10px] overflow-hidden px-[55px] pb-[54px]">
         <router-outlet></router-outlet>
       </div>
   </div>
