@@ -8,6 +8,7 @@ import { ThrowsComponent } from './throws/throws.component';
 import { RankingComponent } from './ranking/ranking.component';
 import { LoserComponent } from './loser/loser.component';
 import { WinnerComponent } from './winner/winner.component';
+import { ErrorPageComponent } from '../shared/error-page/error-page.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
       {path: 'ranking', component: RankingComponent},
       {path: 'ranking/loser', component: LoserComponent},
       {path: 'ranking/winner', component: WinnerComponent},
+      {path: '404', component: ErrorPageComponent },
     ]
   }
 ];
