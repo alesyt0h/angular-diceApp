@@ -30,7 +30,6 @@ export class PlayerListComponent implements OnInit {
       } else {
         this.loading = false;
       }
-      console.log(this.players[1])
     });
   }
 
