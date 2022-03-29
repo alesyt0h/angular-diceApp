@@ -1,25 +1,46 @@
-<h1>Player list</h1>
-
+<h1 class="text-center text-3xl mb-6 pt-[30px]">Player list</h1>
 <ng-container *ngIf="!loading; else elseTemplate">
-    <table>
-      <tr>
-        <th>#</th>
-        <th>Nickname</th>
-        <th>Email</th>
-        <th>Winning Percentage</th>
-        <th>Created at</th>
-      </tr>
-      <tr *ngFor="let player of pageOfItems; let i = index">
-        <td>{{i + 1}}</td>
-        <td>{{player.nickname}}</td>
-        <td>{{player.email}}</td>
-        <td style="{{(player.winning_percentage >= 50) ? 'color:green' : 'color:red'}}">{{(player.winning_percentage) ? player.winning_percentage : 'N/A'}}</td>
-        <td>{{player.created_at | date:'short'}}</td>
-      </tr>
-    </table>
-  <jw-pagination [items]="players" (changePage)="onChangePage($event)"></jw-pagination>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-4">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Nickname
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Email
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Winning %
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Created at
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                    *ngFor="let player of pageOfItems; let i = index">
+                    <td class="px-6 py-4 text-center">
+                        <span routerLink="/user/update/{{player.id}}"
+                            class="cursor-pointer hover:text-indigo-500 animate-[pulse_1s_ease-in-out]">{{player.nickname}}</span>
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        {{player.email}}
+                    </td>
+                    <td class="px-6 py-4 text-center"
+                        [ngClass]="player.winning_percentage >= 50 ? 'text-green-600' : 'text-red-600'">
+                        {{(player.winning_percentage) ? player.winning_percentage : 'N/A'}}
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                        {{player.created_at | date:'short'}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <jw-pagination [items]="players" (changePage)="onChangePage($event)"></jw-pagination>
 </ng-container>
 <ng-template #elseTemplate>
-  Loading..
+    Loading..
 </ng-template>
-
