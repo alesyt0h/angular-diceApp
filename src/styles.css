@@ -307,3 +307,48 @@ input:focus + .focus-input100::after {
     -ms-align-items: center;
     align-items: center;
 }
+
+/* Pagination */
+
+.pagination {
+    display: flex;
+}
+
+.first-item > a{
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+}
+
+.last-item > a{
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+.active > a {
+    border-color: rgb(99,102,241,1) !important;
+    background-color: rgb(238,242,255,1) !important;
+    color: rgb(79,70,229,1) !important;
+}
+
+.page-link {
+    cursor: pointer;
+    position: relative;
+    z-index: 10;
+    display: inline-flex;
+    align-items: center;
+    border-width: 1px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    color: rgb(107,114,128,1);
+    background-color: rgb(255,255,255,1);
+    border-color: rgb(209,213,219,1);
+}
+
+.page-link:hover {
+    background-color: rgb(249,250,251,1);
+}

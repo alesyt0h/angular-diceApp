@@ -1,71 +1,54 @@
-<ng-container *ngIf="throws.length > 0; else loading">
-  <span>Your winning percentage is <strong>{{winningPercentage}}</strong></span>
-  <table>
-    <tr>
-      <th>#</th>
-      <th>Black Dice</th>
-      <th>Red Dice</th>
-      <th>Result</th>
-      <th>Date</th>
-    </tr>
-    <tr *ngFor="let throw of pageOfItems; let i = index">
-      <td>{{i + 1}}</td>
-      <td>{{throw.black_dice}}</td>
-      <td>{{throw.red_dice}}</td>
-      <td style="{{(throw.result === 'win') ? 'color:green' : 'color:red'}}">{{throw.result}}</td>
-      <td>{{throw.created_at | date:'short'}}</td>
-    </tr>
-  </table>
-  <jw-pagination [items]="throws" (changePage)="onChangePage($event)"></jw-pagination>
-  <!-- main app container -->
-<!-- <div class="card text-center m-3">
-  <h3 class="card-header">Angular 10 Pagination Example</h3>
-  <div class="card-body"> -->
-      <!-- <div >{{item.result}}</div> -->
-  <!-- </div>
-  <div class="card-footer pb-0 pt-3"> -->
-      <!-- <div>
-        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-          <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-            <span class="sr-only">Previous</span>
-            <svg class="h-5 w-5" x-description="Heroicon name: solid/chevron-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-  <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-</svg>
-          </a>
-          Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50"
-          <a href="#" aria-current="page" class="z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-            1
-          </a>
-          <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-            2
-          </a>
-          <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 hidden md:inline-flex relative items-center px-4 py-2 border text-sm font-medium">
-            3
-          </a>
-          <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
-            ...
-          </span>
-          <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 hidden md:inline-flex relative items-center px-4 py-2 border text-sm font-medium">
-            8
-          </a>
-          <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-            9
-          </a>
-          <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-            10
-          </a>
-          <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-            <span class="sr-only">Next</span>
-            <svg class="h-5 w-5" x-description="Heroicon name: solid/chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-  <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
-</svg>
-          </a>
-        </nav>
-      </div> -->
-  <!-- </div>
-</div> -->
+<h1 class="text-center text-3xl mb-2 pt-[30px]">Throws</h1>
+<ng-container *ngIf="throws.length > 0; else isLoading" class="relative">
+    <svg routerLink="/user/delete/throws/{{getUserId()}}" xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-red-600 absolute top-10 right-[57px] bg-gray-400/40 rounded-lg p-[5px] cursor-pointer hover:bg-gray-400/80" fill="none" viewBox="0 0 24 24" stroke="currentColor" title="fuck you">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+        <title>Delete all throws</title>
+    </svg>
+    <span class="mb-4 inline-block">
+        Your winning percentage is
+        <strong [ngClass]="winningPercentage >= 50 ? 'text-green-600' : 'text-red-600'">{{winningPercentage}}</strong>
+    </span>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-4">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Black Dice
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Red Dice
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Result
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Date
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                    *ngFor="let throw of pageOfItems; let i = index">
+                    <td class="px-6 py-4 text-center">
+                        {{throw.black_dice}}
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        {{throw.red_dice}}
+                    </td>
+                    <td class="px-6 py-4 text-center"
+                        [ngClass]="throw.result === 'win' ? 'text-green-600' : 'text-red-600'">
+                        {{throw.result}}
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                        {{throw.created_at | date:'short'}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <jw-pagination [items]="throws" (changePage)="onChangePage($event)"></jw-pagination>
+    <div class="text-sm absolute font-['Poppins-Regular'] text-gray-500 right-[57px] pt-[8px]">Total throws: <strong>{{throws.length}}</strong></div>
 </ng-container>
-<ng-template #loading>
-  <span>Loading..</span>
+<ng-template #isLoading>
+    <span>Loading..</span>
 </ng-template>
-
