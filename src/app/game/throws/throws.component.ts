@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from '../../services/game.service';
 import { ThrowsResponse, Throw } from '../interfaces/throw';
+import { HttpErrorResponse } from '@angular/common/http';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-throws',
@@ -18,9 +20,13 @@ export class ThrowsComponent implements OnInit {
     ){}
 
     ngOnInit(): void {
-        this._gameService.throws(this._gameService.getUserId).subscribe((resp: ThrowsResponse) => {
-            this.throws = resp.throws;
-            this.winningPercentage = resp.winning_percentage;
+        this._gameService.throws(this._gameService.getUserId).subscribe((resp: ThrowsResponse | HttpErrorResponse) => {
+            if(this.isHttpErrorResponse(resp)){
+                Swal.fire('Error',resp.error.message,'error')
+            } else {
+                this.throws = resp.throws;
+                this.winningPercentage = resp.winning_percentage;
+            }
         });
     }
 
@@ -30,5 +36,9 @@ export class ThrowsComponent implements OnInit {
 
     getUserId(){
         return this._gameService.getUserId;
+    }
+
+    isHttpErrorResponse(object: any): object is HttpErrorResponse {
+        return 'error' in object;
     }
 }

@@ -1,1 +1,20 @@
-<p>delete-throws works!</p>
+<h1 class="text-center text-3xl mb-6 pt-[30px]">Delete all throws</h1>
+<form class="w-full" autocomplete="off" [formGroup]="deleteForm" (ngSubmit)="delete()">
+    <span class="font-['Poppins-Regular'] text-[16px] text-[#333333] leading-normal pl-[7px]">Are you sure you want to delete all your throws made in the system?</span>
+    <span class="underline text-red-600 text-center block">This action cannot be undone</span>
+
+    <div class="container-login100-form-btn mt-6">
+        <div class="wrap-login100-form-btn !w-fit">
+            <div class="login100-form-bgbtn delete-btn"></div>
+            <button class="login100-form-btn" type="submit">
+                Yes, delete
+            </button>
+        </div>
+        <div class="wrap-login100-form-btn !w-fit">
+            <div class="login100-form-bgbtn"></div>
+            <button class="login100-form-btn" routerLink="/">
+                No! Take me back home
+            </button>
+        </div>
+    </div>
+</form>

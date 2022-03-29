@@ -1,1 +1,20 @@
-<p>update-nickname works!</p>
+<h1 class="text-center text-3xl mb-6 pt-[30px]">Update nickname</h1>
+<form class="w-full" autocomplete="off" [formGroup]="nicknameForm" (ngSubmit)="update()">
+    <div class="w-full relative border-b-[2px] border-solid border-[#d9d9d9] mb-[23px]">
+        <span class="font-['Poppins-Regular'] text-[14px] text-[#333333] leading-normal pl-[7px]">Nickname</span>
+        <input class="font-['Poppins-Medium'] text-[16px] text-[#333333] leading-tight block w-full h-[55px] bg-transparent pr-[7px] pl-[43px]" type="text" formControlName="nickname" placeholder="Introduce a nickname" value="{{user?.nickname}}">
+        <span class="focus-input100"></span>
+    </div>
+    <div class="container-login100-form-btn">
+        <div class="wrap-login100-form-btn">
+            <div class="login100-form-bgbtn"></div>
+            <button class="login100-form-btn" type="submit" [disabled]="user?.nickname === nicknameForm.value.nickname || minLengthError || maxLengthError">
+                {{
+                    (user?.nickname === nicknameForm.value.nickname) ? 'Nicknames are equal' :
+                    (minLengthError) ? 'Nickname\'s minimum is 4 characters' :
+                    (maxLengthError) ? 'Nickname\'s maximum is 15 characters' : 'Update nickname'
+                }}
+            </button>
+        </div>
+    </div>
+</form>

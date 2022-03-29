@@ -266,6 +266,14 @@ input:focus + .focus-input100::after {
     transition: all 0.4s;
 }
 
+.delete-btn {
+    background: linear-gradient(
+        90deg,
+        rgb(220, 96, 137) 0%,
+        rgb(124, 15, 24) 92%
+    ) !important;
+}
+
 .login100-form-btn {
     font-family: Poppins-Medium;
     font-size: 16px;

@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup = this._formBuilder.group({
-    nickname: ['', Validators.maxLength(15) ],
+    nickname: ['', [Validators.maxLength(15), Validators.minLength(4)] ],
     email: ['', [Validators.required, Validators.email] ],
     password: ['', [Validators.required, Validators.minLength(8)]],
   });
