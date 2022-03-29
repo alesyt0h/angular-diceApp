@@ -1,30 +1,27 @@
-<h1 style="text-align: center">Throw the dices</h1>
+<h1 class="text-center text-3xl mb-6 pt-[65px]">Throw the dices</h1>
 
-<div *ngIf="!thrown">
-  <h4 style="margin-top:10px;color:darkgray">Press the play button to throw the dices!</h4>
-  <h5 style="margin-top:20px;color:darkgray">If you get a 7 between the both dices, you lose.</h5>
-  <h5 style="margin-top:5px;color:darkgray">If you get any other result, you will win.</h5>
+<div *ngIf="!thrown" class="text-gray-400">
+    <h4 class="mt-2">Press the play button to throw the dices!</h4>
+    <h5 class="mt-4">If you get a 7 between the both dices, you lose.</h5>
+    <h5 class="mt-1">If you get any other result, you will win.</h5>
 </div>
 
-<div *ngIf="thrown" style="margin-top: 50px">
-  <!-- Grid no longer needed -->
-	<div style="display:grid;grid-template-columns: repeat(2, 1fr);grid-template-rows: 1fr 50px;">
-		<img src="../../../assets/images/dices/b-{{lastThrow.black_dice}}.png" alt="" style="margin:auto">
-		<img src="../../../assets/images/dices/r-{{lastThrow.red_dice}}.png" alt="" style="margin:auto">
-		<!-- <h4 style="margin:auto">{{lastThrow.black_dice}}</h4>
-		<h4 style="margin:auto">{{lastThrow.red_dice}}</h4> -->
-	</div>
-	<div style="text-align:center">
-		<ng-container *ngIf="lastThrow.result === 'win'; else lost">
-      <h3>You won!!</h3>
-		</ng-container>
-		<ng-template #lost>
-			<h3>You lost</h3>
-		</ng-template>
-	</div>
+<div *ngIf="thrown" class="mt-[50px]">
+    <div class="flex mb-8">
+        <img src="../../../assets/images/dices/b-{{lastThrow.black_dice}}.png" alt="" class="m-auto">
+        <img src="../../../assets/images/dices/r-{{lastThrow.red_dice}}.png" alt="" class="m-auto">
+    </div>
+    <div class="text-center">
+        <ng-container *ngIf="lastThrow.result === 'win'; else lost">
+            <h3 class="text-xl">You won!!</h3>
+        </ng-container>
+        <ng-template #lost>
+            <h3 class="text-xl">You lost</h3>
+        </ng-template>
+    </div>
 </div>
 
-<div class="wrap-login100-form-btn" style="{{(thrown) ? 'margin-top: 20px' : 'margin-top: 60px'}}" >
+<div class="wrap-login100-form-btn" [ngClass]="{'!mt-4': thrown, '!mt-8' : !thrown }">
     <div class="login100-form-bgbtn"></div>
     <button class="login100-form-btn" (click)="play(getUserId())">
         {{(thrown) ? 'Play again' : 'Play'}}

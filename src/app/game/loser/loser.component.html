@@ -1,18 +1,50 @@
-<h1>Most Losing Player</h1>
-<ng-container *ngIf="!loading; else elseTemplate">
-  <ng-container *ngIf="user; else noThrows">
-    Nickname: {{user.nickname}}
-    <br>
-    Email: {{user.email}}
-    <br>
-    Created at: {{user.created_at | date:'short'}}
-    <br>
-    Winning Percentage: <span style="{{(user.winning_percentage! >= 50) ? 'color:green' : 'color:red'}}">{{user.winning_percentage}}</span>
-  </ng-container>
-  <ng-template #noThrows>
-    There are no throws in the system to calculate the most losing player!
-  </ng-template>
+<h1 class="text-center text-3xl mb-8 pt-[65px]">Most Losing Player</h1>
+<ng-container *ngIf="!loading; else isLoading">
+    <ng-container *ngIf="user; else noThrows">
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+            <div class="border-t border-gray-200">
+                <dl>
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-[repeat(2,_minmax(0,_1fr))_0px] sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">
+                            Nickname
+                        </dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            {{user.nickname}}
+                        </dd>
+                    </div>
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-[repeat(2,_minmax(0,_1fr))_0px] sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">
+                            Email address
+                        </dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            {{user.email}}
+                        </dd>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-[repeat(2,_minmax(0,_1fr))_0px] sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">
+                            Created at
+                        </dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            {{user.created_at | date:'short'}}
+                        </dd>
+                    </div>
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-[repeat(2,_minmax(0,_1fr))_0px] sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">
+                            Winning Percentage
+                        </dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"
+                            [ngClass]="user.winning_percentage! >= 50 ? 'text-green-600' : 'text-red-600'">
+                            {{user.winning_percentage}}
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+    </ng-container>
+    <ng-template #noThrows>
+        There are no lost throws in the system to calculate the most losing player!
+    </ng-template>
 </ng-container>
-<ng-template #elseTemplate>
-  Loading..
+<ng-template #isLoading>
+    Loading..
 </ng-template>
