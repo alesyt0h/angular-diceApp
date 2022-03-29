@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -8,13 +9,31 @@ import { AuthService } from '../../services/auth.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private _authService: AuthService) { }
+  constructor(
+    public authService: AuthService,
+    private _router: Router
+  ){}
 
   ngOnInit(): void {
+    this.authService.loadUser();
   }
 
   logout(){
-    this._authService.logout().subscribe(console.log);
+    this.authService.logout().subscribe(resp => {
+      this._router.navigateByUrl('/auth/login');
+    });
   }
 
+  mobileMenu(){
+     if(this._router.url.includes('throws') && document.querySelector('#trash')){
+         const trash = document.querySelector('#trash');
+         trash?.classList.toggle('hidden');
+
+         const throwsContainer = document.querySelector('#throws-container');
+         throwsContainer?.classList.toggle('relative');
+     }
+
+     const mobileMenu = document.querySelector('#mobile-menu-4');
+     mobileMenu?.classList.toggle('hidden');
+  }
 }
