@@ -63,12 +63,10 @@ export class AuthService {
             .set('Authorization', 'Bearer ' + this.getToken || '');
 
         return this._http.get<VerifyResponse>(`${this._apiUrl}/verify`, {headers}).pipe(
-            // tap(console.log),
             map((resp: VerifyResponse) => {
                 this._user = resp.user;
                 this._admin = resp.admin;
                 this.saveUser();
-
 
                 return {ok: (resp.user ? true : false), admin: resp.admin};
             }),
