@@ -9,6 +9,8 @@ import { RankingComponent } from './ranking/ranking.component';
 import { LoserComponent } from './loser/loser.component';
 import { WinnerComponent } from './winner/winner.component';
 import { ErrorPageComponent } from '../shared/error-page/error-page.component';
+import { AuthGuard } from '../auth/guards/auth.guard';
+import { AdminGuard } from '../auth/guards/admin.guard';
 
 const routes: Routes = [
   {
@@ -17,13 +19,14 @@ const routes: Routes = [
     children: [
       {path: '', redirectTo: 'play'},
       {path: 'play', component: PlayComponent},
-      {path: 'players', component: PlayerListComponent},
+      {path: 'players', component: PlayerListComponent, canLoad: [AdminGuard], canActivate: [AdminGuard]},
       {path: 'throws/:id', component: ThrowsComponent},
-      {path: 'ranking', component: RankingComponent},
+      {path: 'ranking', component: RankingComponent, canLoad: [AdminGuard], canActivate: [AdminGuard]},
       {path: 'ranking/loser', component: LoserComponent},
       {path: 'ranking/winner', component: WinnerComponent},
       {path: '404', component: ErrorPageComponent },
-    ]
+    ],
+    canLoad: [AuthGuard], canActivate: [AuthGuard]
   }
 ];
 

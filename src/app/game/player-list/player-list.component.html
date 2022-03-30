@@ -22,8 +22,7 @@
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                     *ngFor="let player of pageOfItems; let i = index">
                     <td class="px-6 py-4 text-center">
-                        <span routerLink="/user/update/{{player.id}}"
-                            class="cursor-pointer hover:text-indigo-500 animate-[pulse_1s_ease-in-out]">{{player.nickname}}</span>
+                        <span>{{player.nickname}}</span>
                     </td>
                     <td class="px-6 py-4 text-center">
                         {{player.email}}
