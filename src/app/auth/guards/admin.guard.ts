@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
     providedIn: 'root'
 })
 export class AdminGuard implements CanActivate, CanLoad {
+
     constructor(
         private _router: Router,
         private _authService: AuthService

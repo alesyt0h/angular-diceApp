@@ -13,6 +13,7 @@ export class AuthService {
 
     private _apiUrl: string = environment.apiUrl;
     private _user!: User | null;
+    private _admin: boolean = false;
 
     constructor(private _http: HttpClient) { }
 
@@ -62,9 +63,12 @@ export class AuthService {
             .set('Authorization', 'Bearer ' + this.getToken || '');
 
         return this._http.get<VerifyResponse>(`${this._apiUrl}/verify`, {headers}).pipe(
+            // tap(console.log),
             map((resp: VerifyResponse) => {
                 this._user = resp.user;
+                this._admin = resp.admin;
                 this.saveUser();
+
 
                 return {ok: (resp.user ? true : false), admin: resp.admin};
             }),
@@ -102,6 +106,10 @@ export class AuthService {
 
     get getUser() {
         return this._user;
+    }
+
+    get getAdmin() {
+        return this._admin;
     }
 
 }

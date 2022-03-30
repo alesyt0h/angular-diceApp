@@ -10,7 +10,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class AuthGuard implements CanActivate, CanLoad {
 
-
     constructor(
         private _router: Router,
         private _authService: AuthService
@@ -20,7 +19,6 @@ export class AuthGuard implements CanActivate, CanLoad {
 
         return this._authService.verify().pipe(
             map((resp: any) => {
-                console.log(resp)
                 if(this.isHttpErrorResponse(resp) || !resp.ok){
                     this._router.navigateByUrl('/auth/login')
                 }
@@ -33,7 +31,6 @@ export class AuthGuard implements CanActivate, CanLoad {
     canLoad(): Observable<boolean> | boolean {
         return this._authService.verify().pipe(
             map((resp: any) => {
-                console.log()
                 if(this.isHttpErrorResponse(resp) || !resp.ok){
                     this._router.navigateByUrl('/auth/login')
                 }
