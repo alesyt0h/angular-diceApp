@@ -4,6 +4,7 @@ import { GameService } from '../../services/game.service';
 import { Throw, ThrowResponse } from '../interfaces/throw';
 import { HttpErrorResponse } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { HelperService } from '../../services/helper.service';
 
 @Component({
     selector: 'app-play',
@@ -16,7 +17,8 @@ export class PlayComponent implements OnInit {
     lastThrow!: Throw;
 
     constructor(
-        private _gameService: GameService
+        private _gameService: GameService,
+        private _helper: HelperService
     ) { }
 
     ngOnInit(): void {
@@ -24,7 +26,7 @@ export class PlayComponent implements OnInit {
 
     play(id: string) {
         this._gameService.play(id).subscribe((resp: ThrowResponse | HttpErrorResponse) => {
-            if(this.isHttpErrorResponse(resp)){
+            if(this._helper.isHttpErrorResponse(resp)){
                 Swal.fire('Error', resp.error.message, 'error');
             } else {
                 this.thrown = true;
@@ -35,10 +37,6 @@ export class PlayComponent implements OnInit {
 
     getUserId() {
         return this._gameService.getUserId;
-    }
-
-    isHttpErrorResponse(object: any): object is HttpErrorResponse {
-        return 'error' in object;
     }
 
 }

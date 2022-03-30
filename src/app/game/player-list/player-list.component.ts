@@ -4,6 +4,7 @@ import { User } from '../../auth/interfaces/interfaces';
 import { Players } from '../interfaces/playerList';
 import { HttpErrorResponse } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { HelperService } from '../../services/helper.service';
 
 @Component({
     selector: 'app-player-list',
@@ -17,7 +18,8 @@ export class PlayerListComponent implements OnInit, AfterViewChecked {
     pageOfItems!: Array<any>;
 
     constructor(
-        private _gameService: GameService
+        private _gameService: GameService,
+        private _helper: HelperService
     ) { }
 
     ngAfterViewChecked(): void {
@@ -26,7 +28,7 @@ export class PlayerListComponent implements OnInit, AfterViewChecked {
 
     ngOnInit(): void {
         this._gameService.playerList().subscribe((resp: Players | HttpErrorResponse) => {
-            if (this.isHttpErrorResponse(resp)) {
+            if (this._helper.isHttpErrorResponse(resp)) {
                 Swal.fire('Error', resp.error.message, 'error')
             } else if (resp.users) {
                 this.players = resp.users;
@@ -39,10 +41,6 @@ export class PlayerListComponent implements OnInit, AfterViewChecked {
 
     onChangePage(pageOfItems: Array<any>) {
         this.pageOfItems = pageOfItems;
-    }
-
-    isHttpErrorResponse(object: any): object is HttpErrorResponse {
-        return 'error' in object;
     }
 
     changeJwPaginationText(){

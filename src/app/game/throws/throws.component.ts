@@ -3,6 +3,7 @@ import { GameService } from '../../services/game.service';
 import { ThrowsResponse, Throw } from '../interfaces/throw';
 import { HttpErrorResponse } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { HelperService } from '../../services/helper.service';
 
 @Component({
     selector: 'app-throws',
@@ -16,15 +17,17 @@ export class ThrowsComponent implements OnInit, AfterViewChecked {
     pageOfItems!: Array<any>;
 
     constructor(
-        private _gameService: GameService
+        private _gameService: GameService,
+        private _helper: HelperService
     ){}
+
     ngAfterViewChecked(): void {
         this.changeJwPaginationText();
     }
 
     ngOnInit(): void {
         this._gameService.throws(this._gameService.getUserId).subscribe((resp: ThrowsResponse | HttpErrorResponse) => {
-            if(this.isHttpErrorResponse(resp)){
+            if(this._helper.isHttpErrorResponse(resp)){
                 Swal.fire('Error',resp.error.message,'error')
             } else {
                 this.throws = resp.throws;
@@ -39,10 +42,6 @@ export class ThrowsComponent implements OnInit, AfterViewChecked {
 
     getUserId(){
         return this._gameService.getUserId;
-    }
-
-    isHttpErrorResponse(object: any): object is HttpErrorResponse {
-        return 'error' in object;
     }
 
     changeJwPaginationText(){

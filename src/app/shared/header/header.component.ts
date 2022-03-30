@@ -43,7 +43,4 @@ export class HeaderComponent implements OnInit {
         return this.authService.getAdmin;
     }
 
-    isHttpErrorResponse(object: any): object is HttpErrorResponse {
-        return 'error' in object;
-    }
 }

@@ -4,6 +4,7 @@ import { Loser } from '../interfaces/ranking';
 import { HttpErrorResponse } from '@angular/common/http';
 import { User } from '../../auth/interfaces/interfaces';
 import Swal from 'sweetalert2';
+import { HelperService } from '../../services/helper.service';
 
 @Component({
   selector: 'app-loser',
@@ -16,12 +17,13 @@ export class LoserComponent implements OnInit {
   loading: boolean = true;
 
   constructor(
-    private _gameService: GameService
+    private _gameService: GameService,
+    private _helper: HelperService
   ){}
 
   ngOnInit(): void {
     this._gameService.loser().subscribe((resp: Loser | HttpErrorResponse) => {
-     if(this.isHttpErrorResponse(resp)){
+     if(this._helper.isHttpErrorResponse(resp)){
         Swal.fire('Error', resp.error.message, 'error')
       } else if(resp.loser){
         this.user = resp.loser;
@@ -30,10 +32,6 @@ export class LoserComponent implements OnInit {
         this.loading = false;
       }
     });
-  }
-
-  isHttpErrorResponse(object: any): object is HttpErrorResponse {
-    return 'error' in object;
   }
 
 }
