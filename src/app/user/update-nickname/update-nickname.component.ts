@@ -6,6 +6,7 @@ import { UserService } from '../../services/user.service';
 import { UpdateResponse } from '../interfaces/update';
 import { HttpErrorResponse } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { HelperService } from '../../services/helper.service';
 
 @Component({
     selector: 'app-update-nickname',
@@ -20,6 +21,7 @@ export class UpdateNicknameComponent implements OnInit {
     constructor(
         private _authService: AuthService,
         private _userService: UserService,
+        private _helper: HelperService,
         private _formBuilder: FormBuilder
     ){}
 
@@ -34,7 +36,7 @@ export class UpdateNicknameComponent implements OnInit {
         const nickname = this.nicknameForm.value.nickname;
 
         this._userService.update(nickname).subscribe((resp: UpdateResponse | HttpErrorResponse) => {
-            if(this.isHttpErrorResponse(resp)){
+            if(this._helper.isHttpErrorResponse(resp)){
                 if(resp.status === 400){
                     Swal.fire('Error', resp.error.error.nickname[0], 'error');
                 } else if (resp.status === 409){
@@ -53,10 +55,6 @@ export class UpdateNicknameComponent implements OnInit {
 
     get maxLengthError(){
         return typeof this.nicknameForm.controls['nickname'].errors?.maxlength !== 'undefined';
-    }
-
-    isHttpErrorResponse(object: any): object is HttpErrorResponse {
-        return 'error' in object;
     }
 
 }
