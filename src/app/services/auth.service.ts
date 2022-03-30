@@ -1,10 +1,10 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs'
-import { catchError, tap } from 'rxjs/operators'
+import { catchError, map, tap } from 'rxjs/operators'
 
 import { environment } from '../../environments/environment';
-import { AuthResponse, User } from '../auth/interfaces/interfaces';
+import { AuthResponse, User, VerifyResponse } from '../auth/interfaces/interfaces';
 
 @Injectable({
     providedIn: 'root'
@@ -50,6 +50,23 @@ export class AuthService {
             tap((resp: AuthResponse) => {
                 localStorage.clear();
                 this._user = null;
+            }),
+            catchError(err => {
+                return of(new HttpErrorResponse(err));
+            })
+        );
+    }
+
+    verify(){
+        const headers = new HttpHeaders()
+            .set('Authorization', 'Bearer ' + this.getToken || '');
+
+        return this._http.get<VerifyResponse>(`${this._apiUrl}/verify`, {headers}).pipe(
+            map((resp: VerifyResponse) => {
+                this._user = resp.user;
+                this.saveUser();
+
+                return {ok: (resp.user ? true : false), admin: resp.admin};
             }),
             catchError(err => {
                 return of(new HttpErrorResponse(err));

@@ -1,27 +1,49 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, RouterStateSnapshot, UrlSegment, UrlTree, Router } from '@angular/router';
+import { CanActivate, CanLoad, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
+import { map } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AuthGuard implements CanActivate, CanLoad {
 
 
-  constructor(private _router: Router){}
+    constructor(
+        private _router: Router,
+        private _authService: AuthService
+    ){}
 
-  redirect: Promise<boolean> = this._router.navigateByUrl('/play');
+    canActivate(): Observable<boolean> | boolean {
 
-  canActivate(): Promise<boolean> | boolean {
-    const token = localStorage.getItem('token');
-    const user = localStorage.getItem('user');
+        return this._authService.verify().pipe(
+            map((resp: any) => {
+                console.log(resp)
+                if(this.isHttpErrorResponse(resp) || !resp.ok){
+                    this._router.navigateByUrl('/auth/login')
+                }
 
-    return (token && user) ? this.redirect : true;
-  }
-  canLoad(): Promise<boolean> | boolean {
-    const token = localStorage.getItem('token');
-    const user = localStorage.getItem('user');
+                return true;
+            })
+        );
+    }
 
-    return (token && user) ? this.redirect : true;
-  }
+    canLoad(): Observable<boolean> | boolean {
+        return this._authService.verify().pipe(
+            map((resp: any) => {
+                console.log()
+                if(this.isHttpErrorResponse(resp) || !resp.ok){
+                    this._router.navigateByUrl('/auth/login')
+                }
+
+                return true;
+            })
+        );
+    }
+
+    isHttpErrorResponse(object: any): object is HttpErrorResponse {
+        return 'error' in object;
+    }
 }
