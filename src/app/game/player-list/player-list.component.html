@@ -29,7 +29,7 @@
                     </td>
                     <td class="px-6 py-4 text-center"
                         [ngClass]="player.winning_percentage >= 50 ? 'text-green-600' : 'text-red-600'">
-                        {{(player.winning_percentage) ? player.winning_percentage : 'N/A'}}
+                        {{(player.winning_percentage !== null) ? player.winning_percentage : 'N/A'}}
                     </td>
                     <td class="px-6 py-4 text-right">
                         {{player.created_at | date:'short'}}
