@@ -20,9 +20,14 @@ export class HeaderComponent implements OnInit {
     }
 
     logout() {
-        this.authService.logout().subscribe(resp => {
-            localStorage.clear();
-            this._router.navigateByUrl('/auth/login');
+        this.authService.logout().subscribe((resp: {message: string}) => {
+            if(resp.message){
+                this._router.navigateByUrl('/auth/login').then(() => {
+                    if(!this._router.url.includes('auth/login')){
+                        window.location.reload();
+                    }
+                });
+            }
         });
     }
 

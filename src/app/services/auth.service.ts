@@ -47,8 +47,8 @@ export class AuthService {
         const headers = new HttpHeaders()
             .set('Authorization', 'Bearer ' + this.getToken);
 
-        return this._http.post<AuthResponse>(this._apiUrl + '/logout', {}, { headers }).pipe(
-            tap((resp: AuthResponse) => {
+        return this._http.post<{message: string}>(this._apiUrl + '/logout', {}, { headers }).pipe(
+            tap(resp => {
                 localStorage.clear();
                 this._user = null;
             }),
